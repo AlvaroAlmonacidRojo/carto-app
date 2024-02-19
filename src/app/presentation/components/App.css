@@ -40,33 +40,3 @@
 .read-the-docs {
   color: #888;
 }
-
-.mapboxgl-ctrl-top-left {
-  position: absolute;
-  padding: 2px;
-  top: 0;
-  left: 0;
-}
-
-.mapboxgl-ctrl-top-right {
-  position: absolute;
-  padding: 2px;
-  top: 0;
-  right: 0;
-}
-
-.mapboxgl-ctrl-bottom-right {
-  position: absolute;
-  padding: 2px;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.5);
-    border-top-left-radius: 4px;
-}
-
-.mapboxgl-ctrl-bottom-left {
-  position: absolute;
-  padding: 2px;
-  bottom: 0;
-  left: 0;
-}
