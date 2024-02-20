@@ -1,8 +1,6 @@
-import { MuiColorInput } from "mui-color-input";
-import { Layer } from "../../../constants/layers";
 import { Box, Card } from "@mui/material";
-import useColorInput from "../../hooks/useColorInput";
 import LayerForm from "../LayerForm";
+import { Layer } from "../../../../shared/models/layer";
 
 interface Props {
   layers: Layer[];

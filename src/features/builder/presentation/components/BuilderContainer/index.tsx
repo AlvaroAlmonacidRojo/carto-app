@@ -7,41 +7,47 @@ import { layers } from "../../../constants/layers";
 import { CartoLayer } from "@deck.gl/carto/typed";
 import { useState } from "react";
 import { Layer } from "../../../../shared/models/layer";
+import { Box } from "@mui/material";
 
 const BuilderContainer = () => {
   const [layersList, setLayersList] = useState<Layer[]>(layers);
+
   const replaceItemById = (layers: Layer[], newLayer: Layer) =>
     layers.map((layer) => (layer.id === newLayer.id ? newLayer : layer));
 
   const onChangeLayer = (layer: Layer) => {
-    console.log("New layer 1", layer);
     const newLayers = replaceItemById(layersList, layer);
-    console.log('New Layers', newLayers)
-    setLayersList(newLayers);
+    setLayersList([...newLayers]);
   };
 
-  const getCartoLayers = (list: Layer[]) =>
-    list.map((layer) => new CartoLayer(layer));
+  const getCartoLayers = layersList.map(
+    (layer) => new CartoLayer({ ...layer })
+  );
 
   return (
-    <div>
+    <Box>
       <CssBaseline />
       <AppBar component="nav">Carto Builder</AppBar>
       <Grid
         container
         display={"flex"}
         marginTop="2em"
-        height="100%"
-        minHeight="700px"
       >
-        <Grid item xs={2} borderRight="1px solid grey">
+        <Grid
+          paddingRight="10px"
+          item
+          xs={2}
+          borderRight="1px solid grey"
+          maxHeight={window.innerHeight * 0.9}
+          overflow="auto"
+        >
           <BuilderLayers onChangeLayer={onChangeLayer} layers={layersList} />
         </Grid>
         <Grid item xs={10} position="relative">
-          <BuilderMap layers={getCartoLayers(layersList)} />
+          <BuilderMap layers={getCartoLayers} />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

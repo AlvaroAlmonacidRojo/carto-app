@@ -1,16 +1,25 @@
-import { Card, IconButton, Input, Slider } from "@mui/material";
+import { useState } from "react";
+import {
+  Card,
+  IconButton,
+  Box,
+  Typography,
+} from "@mui/material";
 import { Layer } from "../../../../shared/models/layer";
-import { MuiColorInput } from "mui-color-input";
-import useColorInput from "../../hooks/useColorInput";
-import useSliderInput from "../../hooks/useSliderInput";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { getFillColor } from "../../../constants/colors";
+import SliderInput from "../../../../shared/ui/components/SliderInput";
+import ColorInput from "../../../../shared/ui/components/ColorInput";
+import PaletteSelect from "../../../../shared/ui/components/PaletteSelect";
+import Select from "../../../../shared/ui/components/Select";
 
 interface Props {
   layer: Layer;
   onChangeLayer: (layer: Layer) => void;
 }
 const LayerForm = ({ layer, onChangeLayer }: Props) => {
+  const [basedOn, setBasedOn] = useState(layer.basedOn);
   const onChangeCallback = (id: string) => (newValue: string | number) => {
     if (typeof newValue === "string") {
       const isRgba = newValue.includes("rgba");
@@ -18,93 +27,100 @@ const LayerForm = ({ layer, onChangeLayer }: Props) => {
         .substring(isRgba ? 5 : 4, newValue.length - 1)
         .split(", ")
         .map(Number);
-      console.log("RBG VALUES", rgbValues);
-
-      onChangeLayer({ ...layer, [id]: rgbValues });
+      if (id === "getFillColor") {
+        if (layer.basedOn && basedOn !== "default") {
+          onChangeLayer({
+            ...layer,
+            getFillColor: getFillColor(layer.basedOn, newValue),
+            updateTriggers: {
+              getFillColor: getFillColor(layer.basedOn, newValue),
+            },
+          });
+        } else {
+          onChangeLayer({
+            ...layer,
+            getFillColor: rgbValues,
+            updateTriggers: {
+              getFillColor: rgbValues,
+            },
+          });
+        }
+      } else {
+        onChangeLayer({ ...layer, [id]: rgbValues });
+      }
     } else {
       onChangeLayer({ ...layer, [id]: newValue });
     }
   };
-  const { value: fillValue, onChange: onChangeFill } = useColorInput(
-    `rgb (${layer.getFillColor[0]}, ${layer.getFillColor[1]}, ${layer.getFillColor[2]})`,
-    onChangeCallback("getFillColor")
-  );
-  const { value: outlineValue, onChange: onChangeOutline } = useColorInput(
-    `rgb (${layer.getLineColor[0]}, ${layer.getLineColor[1]}, ${layer.getLineColor[2]})`,
-    onChangeCallback("getLineColor")
-  );
-  const {
-    value: sliderValue,
-    onChangeSlider: onChangeRadiusSlider,
-    onChangeInput: onChangeInputRadiusSlider,
-  } = useSliderInput(
-    layer.pointRadiusMinPixels,
-    onChangeCallback("pointRadiusMinPixels")
-  );
-  const {
-    value: sliderStrokeValue,
-    onChangeSlider: onChangeStrokeSlider,
-    onChangeInput: onChangeInputStrokeSlider,
-  } = useSliderInput(
-    layer.lineWidthMinPixels,
-    onChangeCallback("lineWidthMinPixels")
-  );
-
   const onChangeVisibily = () => {
     onChangeLayer({ ...layer, visible: !layer.visible });
   };
+
   return (
     <Card key={`layer-${layer.id}`}>
-      {layer.id}
-      <IconButton onClick={onChangeVisibily}>
-        {layer.visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-      </IconButton>
-      <div>
-        Fill Color:
-        <MuiColorInput format="rgb" onChange={onChangeFill} value={fillValue} />
-      </div>
-      <div>
-        Outline Color:
-        <MuiColorInput onChange={onChangeOutline} value={outlineValue} />
-      </div>
-      <div>
-        Stroke Width:
-        <Slider
-          value={sliderStrokeValue}
-          onChange={onChangeStrokeSlider}
-          aria-labelledby="input-slider"
-        />
-        <Input
-          value={sliderStrokeValue}
-          size="small"
-          onChange={onChangeInputStrokeSlider}
-          inputProps={{
-            min: 0,
-            max: 100,
-            type: "number",
-            "aria-labelledby": "input-slider",
-          }}
-        />
-      </div>
-      <div>
-        Radius:
-        <Slider
-          value={sliderValue}
-          onChange={onChangeRadiusSlider}
-          aria-labelledby="input-radius-slider"
-        />
-        <Input
-          value={sliderValue}
-          size="small"
-          onChange={onChangeInputRadiusSlider}
-          inputProps={{
-            min: 0,
-            max: 100,
-            type: "number",
-            "aria-labelledby": "input-radius-slider",
-          }}
-        />
-      </div>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Typography variant="h6" id="layer-id" gutterBottom margin={0}>
+          {layer.id}
+        </Typography>
+        <IconButton onClick={onChangeVisibily}>
+          {layer.visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+        </IconButton>
+      </Box>
+      <Box>
+        {layer.basedOn && (
+          <Box>
+            <Typography>Fill Color</Typography>
+            <Select
+              id="base-on-select"
+              label="Color base on"
+              initialValue={basedOn ? basedOn : "default"}
+              options={[
+                { value: "default", label: "New color" },
+                { value: layer.basedOn, label: layer.basedOn },
+              ]}
+              onChangeCallback={(newValue) => setBasedOn(newValue)}
+            />
+          </Box>
+        )}
+        <Box>
+          {!(basedOn && basedOn !== "default") ? (
+            <ColorInput
+              id="getFillColor"
+              label="Color:"
+              initialValue={`rgb (${(layer.getFillColor as number[])[0]}, ${
+                (layer.getFillColor as number[])[1]
+              }, ${(layer.getFillColor as number[])[2]})`}
+              onChangeCallback={onChangeCallback}
+            />
+          ) : (
+            <PaletteSelect
+              id="getFillColor"
+              label={`Palette base on (${basedOn}) `}
+              initialValue="PinkYl"
+              onChangeCallback={onChangeCallback}
+            />
+          )}
+        </Box>
+      </Box>
+
+      <ColorInput
+        id="getLineColor"
+        label="Outline Color:"
+        initialValue={`rgb (${layer.getLineColor[0]}, ${layer.getLineColor[1]}, ${layer.getLineColor[2]})`}
+        onChangeCallback={onChangeCallback}
+      />
+      <SliderInput
+        id="lineWidthMinPixels"
+        label="Stroke Width:"
+        initialValue={layer.lineWidthMinPixels}
+        onChangeCallback={onChangeCallback}
+      />
+      <SliderInput
+        id="pointRadiusMinPixels"
+        label="Radius:"
+        initialValue={layer.pointRadiusMinPixels}
+        onChangeCallback={onChangeCallback}
+      />
     </Card>
   );
 };
