@@ -1,7 +1,8 @@
 import { Box, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import useSelectChange from "../../hooks/useSelect";
 // @ts-expect-error no types definition for this library
 import * as cartoColors from "cartocolor";
+import useSelectChange from "../../hooks/useSelect";
+
 
 interface Props {
   id: string;

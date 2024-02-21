@@ -1,30 +1,71 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Carto App
 
-Currently, two official plugins are available:
+Carto App is an application based on feature flags, in this first version the application only has the Builder functionality and therefore the structure of the project is reflected:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Project structure
+ - app: app will contain and orchestrate the different features
+ - features: will contain the different functionalities of the application
+    - shared: contains common functionalities that can be shared between the different features such as (hooks, components, models, etc)
+    - builder: contains all the logic related to the builder feature as specific components and constants related to this feature
 
-## Expanding the ESLint configuration
+### Next versions and improvements
+For the following versions and improvements, more tests could be implemented in the builder feature, improvements in accessibility and more responsive designs since currently the app works correctly in the desktop version. In addition, better documentation and testing of components visually with storybooks
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Deployed on Vercel
+https://carto-app.vercel.app/
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+1. Create Carto Token to access datasets https://docs.carto.com/carto-for-developers/carto-for-react/guides/authentication-and-authorization.
+2. Create Mapbox Access Token https://docs.mapbox.com/help/getting-started/access-tokens/
+
+3. Create `.env` file using `.env.example` and add your tokens into VITE_CARTO_ACCESS_TOKEN and VITE_MAPBOX_ACCESS_TOKEN keys
+4. Install dependencies by running: 
+```bash
+pnpm install
+# or
+yarn install
+# or
+npm install
+# or
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+4. Run the development server with:
+
+```bash
+pnpm dev
+# or
+yarn dev
+# or
+npm run dev
+```
+
+### Screens:
+
+Initial View (3 layers only Retail Stores visible, palette base on revenue)
+![ScreenShot 1](./docs/1-screenshot.png)
+
+2 - View (3 layers only Retail Stores visible, palette base on revenue, radius and stroke modified)
+![ScreenShot 2](./docs/2-screenshot.png)
+
+3 - View (3 layers only Retail Stores visible, palette base on revenue, paletter color, radius and stroke modified)
+![ScreenShot 3](./docs/3-screenshot.png)
+
+4 - View (3 layers only Retail Stores visible, color, radius and stroke modified)
+![ScreenShot 4](./docs/4-screenshot.png)
+
+5 - View (3 layers only Retail Stores and World Airports visibles, color, radius and stroke modified)
+
+![ScreenShot 5](./docs/5-screenshot.png)
+
+## Tests
+Unit testing of most features such as hooks and shared components
+```bash
+pnpm test
+# or
+yarn test
+# or
+npm run test
+```
+![Tests](./docs/tests.png)

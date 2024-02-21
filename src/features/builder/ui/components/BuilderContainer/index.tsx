@@ -1,13 +1,11 @@
-import AppBar from "@mui/material/AppBar";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
+import { useState } from "react";
+import { Box, AppBar, Grid } from "@mui/material";
+import { CartoLayer } from "@deck.gl/carto/typed";
+
 import BuilderMap from "../BuilderMap";
 import BuilderLayers from "../BuilderLayers";
 import { layers } from "../../../constants/layers";
-import { CartoLayer } from "@deck.gl/carto/typed";
-import { useState } from "react";
 import { Layer } from "../../../../shared/models/layer";
-import { Box } from "@mui/material";
 
 const BuilderContainer = () => {
   const [layersList, setLayersList] = useState<Layer[]>(layers);
@@ -26,7 +24,6 @@ const BuilderContainer = () => {
 
   return (
     <Box>
-      <CssBaseline />
       <AppBar component="nav">Carto Builder</AppBar>
       <Grid container display={"flex"} marginTop="2em">
         <Grid

@@ -1,10 +1,10 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import DeckGL from "@deck.gl/react/typed";
 import { setDefaultCredentials, API_VERSIONS } from "@deck.gl/carto/typed";
 import { LayersList, MapViewState } from "@deck.gl/core/typed";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map from "react-map-gl";
-import { useState } from "react";
 import useMap from "../../hooks/useMap";
 import { defaultViewState } from "../../../constants/views";
 import { BASE_MAP } from "../../../constants/mapStyles";
