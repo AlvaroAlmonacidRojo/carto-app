@@ -1,7 +1,6 @@
-import './App.css'
 import { ThemeProvider } from '@emotion/react';
 
-import BuilderContainer from '../../../features/builder/presentation/components/BuilderContainer'
+import BuilderContainer from '../../../features/builder/ui/components/BuilderContainer'
 import theme from '../theme';
 
 function App() {

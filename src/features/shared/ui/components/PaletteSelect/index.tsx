@@ -1,5 +1,6 @@
 import { Box, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import useSelectChange from "../../../../builder/presentation/hooks/useSelect";
+import useSelectChange from "../../hooks/useSelect";
+// @ts-expect-error no types definition for this library
 import * as cartoColors from "cartocolor";
 
 interface Props {
@@ -35,7 +36,7 @@ const PaletteSelect = ({ id, label, initialValue, onChangeCallback }: Props) => 
               >
                 <Typography>{key}</Typography>
                 <Box display="flex" marginLeft="4px">
-                  {cartoColors[key][6].map((color, index) => (
+                  {cartoColors[key][6].map((color: string, index: number) => (
                     <span
                       key={index}
                       style={{

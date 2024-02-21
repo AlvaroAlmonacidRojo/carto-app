@@ -1,5 +1,5 @@
 import { Box, Grid, Input, Slider, Typography } from "@mui/material";
-import useSliderInput from "../../../../builder/presentation/hooks/useSliderInput";
+import useSliderInput from "../../hooks/useSliderInput";
 
 interface Props {
   id: string;
@@ -14,11 +14,16 @@ const SliderInput = ({ id, label, initialValue, onChangeCallback }: Props) => {
     onChangeCallback(id)
   );
   return (
-    <Box sx={{ width: 250 }} >
+    <Box sx={{ width: 250 }}>
       <Typography id="input-slider" gutterBottom>
         {label}
       </Typography>
-      <Grid container spacing={2} alignItems="center" justifyContent="space-between">
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Grid item xs={8}>
           <Slider
             value={value}
@@ -32,6 +37,7 @@ const SliderInput = ({ id, label, initialValue, onChangeCallback }: Props) => {
             size="small"
             onChange={onChangeInput}
             inputProps={{
+              role: "textbox",
               min: 0,
               max: 100,
               type: "number",

@@ -1,4 +1,4 @@
-import { Box, Card } from "@mui/material";
+import { Box } from "@mui/material";
 import LayerForm from "../LayerForm";
 import { Layer } from "../../../../shared/models/layer";
 
@@ -8,7 +8,7 @@ interface Props {
 }
 const BuilderLayers = ({ layers, onChangeLayer }: Props) => {
   return (
-    <Box display="grid" gap={1}>
+    <Box display="grid" gap={1} role="list">
       Layers
       {layers.map((layer) => {
         return (

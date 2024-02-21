@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { MuiColorInput } from "mui-color-input";
-import useColorInput from "../../../../builder/presentation/hooks/useColorInput";
+import useColorInput from "../../hooks/useColorInput";
 
 interface Props {
   id: string;

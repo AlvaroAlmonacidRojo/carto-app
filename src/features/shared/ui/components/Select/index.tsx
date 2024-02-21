@@ -1,5 +1,5 @@
 import { Box, InputLabel, MenuItem, Select as SelectMui } from "@mui/material";
-import useSelectChange from "../../../../builder/presentation/hooks/useSelect";
+import useSelectChange from "../../hooks/useSelect";
 
 interface Props {
   id: string;
@@ -26,7 +26,6 @@ const Select = ({
       <SelectMui
         labelId="select-label-id"
         id={`select-${id}`}
-        label="Color base on"
         value={value}
         fullWidth
         onChange={onChange}
@@ -36,8 +35,6 @@ const Select = ({
             {item.label}
           </MenuItem>
         ))}
-        {/* <MenuItem value="default">New color</MenuItem>
-        <MenuItem value={layer.basedOn}>{layer.basedOn}</MenuItem> */}
       </SelectMui>
     </Box>
   );

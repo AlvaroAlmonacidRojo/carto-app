@@ -1,3 +1,4 @@
+// @ts-expect-error no types definition for this library
 import * as cartoColors from "cartocolor";
 import { colorBins } from "@deck.gl/carto/typed";
 

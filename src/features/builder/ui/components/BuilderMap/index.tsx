@@ -8,10 +8,10 @@ import { useState } from "react";
 import useMap from "../../hooks/useMap";
 import { defaultViewState } from "../../../constants/views";
 import { BASE_MAP } from "../../../constants/mapStyles";
+import { API_BASE_URL } from "../../../constants/api";
 
 const CARTO_ACCESS_TOKEN = import.meta.env.VITE_CARTO_ACCESS_TOKEN;
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 setDefaultCredentials({
   apiVersion: API_VERSIONS.V3,

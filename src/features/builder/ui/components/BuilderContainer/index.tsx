@@ -28,22 +28,24 @@ const BuilderContainer = () => {
     <Box>
       <CssBaseline />
       <AppBar component="nav">Carto Builder</AppBar>
-      <Grid
-        container
-        display={"flex"}
-        marginTop="2em"
-      >
+      <Grid container display={"flex"} marginTop="2em">
         <Grid
+          sx={{ display: { xs: "none", md: 'block' } }}
           paddingRight="10px"
           item
-          xs={2}
+          lg={3}
           borderRight="1px solid grey"
           maxHeight={window.innerHeight * 0.9}
           overflow="auto"
         >
           <BuilderLayers onChangeLayer={onChangeLayer} layers={layersList} />
         </Grid>
-        <Grid item xs={10} position="relative">
+        <Grid
+          item
+          lg={9}
+          sx={{ position: { xs: "inheretic", md: "relative"}}}
+          maxHeight={window.innerHeight * 0.9}
+        >
           <BuilderMap layers={getCartoLayers} />
         </Grid>
       </Grid>

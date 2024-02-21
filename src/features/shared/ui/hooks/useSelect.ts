@@ -13,12 +13,9 @@ function useSelectChange<T>(
     onChangeCallback(newValue);
   };
 
-  const resetState = () => setValue(initialState);
-
   return {
     value,
-    onChange: handleChange,
-    resetState,
+    onChange: handleChange
   };
 }
 
